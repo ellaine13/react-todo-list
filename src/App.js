@@ -1,24 +1,30 @@
 import { useState } from 'react';
 import './App.css';
+import ToDoList from './ToDoList';
 
 function App() {
-  const [listItem, setListItem] = useState([]);
+  const [toDoList, setToDoList] = useState([]);
+  const [userInput, setUserInput] = useState('');
 
   const handleFormSubmit = (event) => {
-    console.log(listItem, event.target.textContent);
     event.preventDefault();
-    setListItem([event.target.textContent]);
-
-    event.target.reset();
+    addListItem(userInput);
+    setUserInput('');
   }
 
-  const itemsListRender = (event) => {
-    // if (listItem.length) {
-      console.log(listItem);
-      return (
-        <li className="form__item" key={listItem}>{listItem}</li>
-      )
-    // }
+  const handleInputChange = (event) => {
+      setUserInput(event.currentTarget.value)
+  }
+
+  const addListItem = (userInput) => {
+      let copy = [...toDoList];
+
+      copy = [...copy, {
+          id: toDoList.length + 1,
+          task: userInput,
+      }];
+
+      setToDoList(copy);
   }
 
   return (
@@ -28,18 +34,17 @@ function App() {
       </header>
       <main>
         <form
-            onSubmit={handleFormSubmit}
-            className="form"
+          onSubmit={handleFormSubmit}
+          className="form"
         >
           <input
-              type="text"
-              placeholder="Што мае быць зроблена?"
-              className="form__input"
-              onChange={e => setListItem(e.target.value)}
+            type="text"
+            placeholder="Што мае быць зроблена?"
+            className="form__input"
+            onChange={handleInputChange}
+            value={userInput}
           />
-          <ul className="form__list">
-            {itemsListRender()}
-          </ul>
+          <ToDoList toDoList={toDoList} />
         </form>
       </main>
     </div>
