@@ -1,0 +1,15 @@
+.form__item {
+    margin: 0;
+    padding: 10px 16px;
+    list-style: none;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-top: 0;
+    background: #fff;
+    cursor: pointer;
+}
+
+.form__item--done {
+    text-decoration: line-through;
+    color: #bbb;
+}

@@ -1,24 +1,48 @@
 import { useState } from 'react';
+import ToDoList from './ToDoList';
 import './App.css';
 
 function App() {
-  const [listItem, setListItem] = useState([]);
+  const [toDoList, setToDoList] = useState([]);
+  const [userInput, setUserInput] = useState('');
 
   const handleFormSubmit = (event) => {
-    console.log(listItem, event.target.textContent);
     event.preventDefault();
-    setListItem([event.target.textContent]);
-
-    event.target.reset();
+    if (!userInput ) return;
+    addListItem(userInput);
+    setUserInput('');
   }
 
-  const itemsListRender = (event) => {
-    // if (listItem.length) {
-      console.log(listItem);
-      return (
-        <li className="form__item" key={listItem}>{listItem}</li>
-      )
-    // }
+  const handleInputChange = (event) => {
+    setUserInput(event.currentTarget.value)
+  }
+
+  const addListItem = (userInput) => {
+    let copy = [...toDoList];
+
+    copy = [...copy, {
+      id: toDoList.length + userInput,
+      task: userInput,
+      complete: false,
+    }];
+
+    setToDoList(copy);
+  }
+
+  const handleToggle = (id) => {
+    let mapped = toDoList.map(task => {
+      return task.id === id ? { ...task, complete: !task.complete } : { ...task};
+    });
+
+    setToDoList(mapped);
+  }
+
+  const handleUnfinished = () => {
+    let unfinished = toDoList.filter(task => {
+      return !task.complete;
+    });
+
+    setToDoList(unfinished);
   }
 
   return (
@@ -28,18 +52,17 @@ function App() {
       </header>
       <main>
         <form
-            onSubmit={handleFormSubmit}
-            className="form"
+          onSubmit={handleFormSubmit}
+          className="form"
         >
           <input
-              type="text"
-              placeholder="Што мае быць зроблена?"
-              className="form__input"
-              onChange={e => setListItem(e.target.value)}
+            type="text"
+            placeholder="Што мае быць зроблена?"
+            className="form__input"
+            onChange={handleInputChange}
+            value={userInput}
           />
-          <ul className="form__list">
-            {itemsListRender()}
-          </ul>
+          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} />
         </form>
       </main>
     </div>
