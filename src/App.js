@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './App.css';
 import ToDoList from './ToDoList';
+import './App.css';
 
 function App() {
   const [toDoList, setToDoList] = useState([]);
@@ -8,23 +8,41 @@ function App() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    if (!userInput ) return;
     addListItem(userInput);
     setUserInput('');
   }
 
   const handleInputChange = (event) => {
-      setUserInput(event.currentTarget.value)
+    setUserInput(event.currentTarget.value)
   }
 
   const addListItem = (userInput) => {
-      let copy = [...toDoList];
+    let copy = [...toDoList];
 
-      copy = [...copy, {
-          id: toDoList.length + 1,
-          task: userInput,
-      }];
+    copy = [...copy, {
+      id: toDoList.length + 1,
+      task: userInput,
+      complete: false,
+    }];
 
-      setToDoList(copy);
+    setToDoList(copy);
+  }
+
+  const handleToggle = (id) => {
+    let mapped = toDoList.map(task => {
+      return task.id === Number(id) ? { ...task, complete: !task.complete } : { ...task};
+    });
+
+    setToDoList(mapped);
+  }
+
+  const handleUnfinished = () => {
+    let unfinished = toDoList.filter(task => {
+      return !task.complete;
+    });
+
+    setToDoList(unfinished);
   }
 
   return (
@@ -44,7 +62,7 @@ function App() {
             onChange={handleInputChange}
             value={userInput}
           />
-          <ToDoList toDoList={toDoList} />
+          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} />
         </form>
       </main>
     </div>
