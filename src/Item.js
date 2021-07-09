@@ -8,8 +8,10 @@ const Item = ({item, handleToggle}) => {
   }
 
   return (
-    <li data-id={item.id} className={item.complete ? 'form__item form__item--done' : 'form__item'} onClick={handleClick}>
-      {item.task}
+    <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} onClick={handleClick}>
+      <input type='checkbox' className='item__checkbox'></input>
+      <span className='item__label'>{item.task}</span>
+      <button type='button' className='remove'>Выдаліць</button>
     </li>
   );
 };

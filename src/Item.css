@@ -1,4 +1,6 @@
-.form__item {
+.item {
+    display: flex;
+    justify-content: space-between;
     margin: 0;
     padding: 10px 16px;
     list-style: none;
@@ -6,10 +8,27 @@
     border: 1px solid #ddd;
     border-top: 0;
     background: #fff;
-    cursor: pointer;
 }
 
-.form__item--done {
+.item--done {
     text-decoration: line-through;
     color: #bbb;
+}
+
+.item__label {
+    margin-right: auto;
+}
+
+.item__checkbox {
+    margin: 0 16px 0 0;
+}
+
+.remove {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.item:hover .remove {
+    opacity: 1;
+    visibility: visible;
 }
