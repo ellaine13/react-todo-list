@@ -10,13 +10,13 @@
     background: #fff;
 }
 
-.item--done {
-    text-decoration: line-through;
-    color: #bbb;
-}
-
 .item__label {
     margin-right: auto;
+}
+
+.item--done .item__label {
+    text-decoration: line-through;
+    color: #bbb;
 }
 
 .item__checkbox {
@@ -29,6 +29,7 @@
 }
 
 .item:hover .remove {
+    cursor: pointer;
     opacity: 1;
     visibility: visible;
 }

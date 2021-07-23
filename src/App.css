@@ -23,8 +23,7 @@
 }
 
 .form__input {
-  width: 25vw;
-  min-width: 400px;
+  width: 600px;
   padding: 20px 16px;
   border-radius: 0;
   border: 1px solid #bbb;

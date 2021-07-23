@@ -22,7 +22,7 @@ function App() {
 
     copy = [...copy, {
       id: toDoList.length + userInput,
-      task: userInput,
+      taskName: userInput,
       complete: false,
     }];
 
@@ -30,8 +30,8 @@ function App() {
   }
 
   const handleToggle = (id) => {
-    let mapped = toDoList.map(task => {
-      return task.id === id ? { ...task, complete: !task.complete } : { ...task};
+    let mapped = toDoList.map(taskName => {
+      return taskName.id === id ? { ...taskName, complete: !taskName.complete } : { ...taskName};
     });
 
     setToDoList(mapped);

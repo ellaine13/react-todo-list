@@ -1,7 +1,25 @@
 .form__list {
-    width: 25vw;
-    min-width: 400px;
+    width: 600px;
     margin: 0 auto;
     padding: 0;
     font-size: 18px;
+}
+
+.form__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 16px;
+    font-size: 12px;
+    line-height: 18px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.form__counter {
+    font-size: inherit;
+}
+
+.form__clear {
+    display: block;
+    font-size: inherit;
 }

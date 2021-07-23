@@ -2,15 +2,14 @@ import React from 'react';
 import './Item.css';
 
 const Item = ({item, handleToggle}) => {
-  const handleClick = (event) => {
-    event.preventDefault()
-    handleToggle(event.currentTarget.dataset.id)
+  const handleCheckboxClick = (event) => {
+    handleToggle(event.currentTarget.parentNode.dataset.id)
   }
 
   return (
-    <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} onClick={handleClick}>
-      <input type='checkbox' className='item__checkbox'></input>
-      <span className='item__label'>{item.task}</span>
+    <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} >
+      <input type='checkbox' className='item__checkbox' onClick={handleCheckboxClick} />
+      <span className='item__label'>{item.taskName}</span>
       <button type='button' className='remove'>Выдаліць</button>
     </li>
   );
