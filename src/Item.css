@@ -8,6 +8,7 @@
     border: 1px solid #ddd;
     border-top: 0;
     background: #fff;
+    cursor: pointer;
 }
 
 .item__label {
@@ -21,6 +22,7 @@
 
 .item__checkbox {
     margin: 0 16px 0 0;
+    cursor: pointer;
 }
 
 .remove {

@@ -8,7 +8,7 @@ function App() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (!userInput ) return;
+    if (!userInput) return;
     addListItem(userInput);
     setUserInput('');
   }
@@ -25,7 +25,6 @@ function App() {
       taskName: userInput,
       complete: false,
     }];
-
     setToDoList(copy);
   }
 
