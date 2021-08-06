@@ -3,6 +3,8 @@ import Item from './Item';
 import './ToDoList.css';
 
 const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
+  const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
+
   return (
     <>
       <ul className='form__list'>
@@ -18,7 +20,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
         })}
       </ul>
       <footer className='form__footer'>
-        <span className='form__counter'>Засталося зрабіць: ?</span>
+        <span className='form__counter'>Засталося зрабіць: {undoneItemsCount}</span>
         <div className='form__filters'>
           <button className='form__btn'>Усе</button>
           <button className='form__btn'>Актыўныя</button>
