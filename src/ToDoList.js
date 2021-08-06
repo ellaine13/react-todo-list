@@ -8,16 +8,31 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
       <ul className='form__list'>
         {toDoList.map(item => {
           return (
-            <Item item={item} key={item.id + item.taskName} handleToggle={handleToggle} handleUnfinished={handleUnfinished} />
+            <Item
+              item={item}
+              key={item.id + item.taskName}
+              handleToggle={handleToggle}
+              handleUnfinished={handleUnfinished}
+            />
           )
         })}
       </ul>
       <footer className='form__footer'>
         <span className='form__counter'>Засталося зрабіць: ?</span>
-        {toDoList.length > 0
-          ? <button className='form__clear' onClick={handleUnfinished}>Выдаліць зробленае</button>
-          : false
-        }
+        <div className='form__filters'>
+          <button className='form__btn'>Усе</button>
+          <button className='form__btn'>Актыўныя</button>
+          <button className='form__btn'>Зробленыя</button>
+        </div>
+        <button
+          className={
+            (toDoList.length === 0)
+              ? 'form__clear form__clear--hidden'
+              : 'form__clear'
+          }
+          onClick={handleUnfinished}>
+          Выдаліць зробленае
+        </button>
       </footer>
     </>
   );

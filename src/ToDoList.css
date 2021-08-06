@@ -22,4 +22,17 @@
 .form__clear {
     display: block;
     font-size: inherit;
+    cursor: pointer;
+}
+
+.form__clear--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.form__btn {
+    margin: 0 3px;
+    font-size: 11px;
+    cursor: pointer;
 }
