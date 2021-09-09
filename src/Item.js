@@ -1,14 +1,9 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({item, handleToggle}) => {
+const Item = ({item, handleToggle, handleItemRemove}) => {
   const handleItemClick = (event) => {
     handleToggle(event.currentTarget.dataset.id)
-  }
-
-  const handleItemRemove = (event) => {
-    event.stopPropagation();
-    console.log(item);
   }
 
   return (
