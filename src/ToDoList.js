@@ -2,8 +2,15 @@ import React from 'react';
 import Item from './Item';
 import './ToDoList.css';
 
-const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
+const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
+
+  const handleFilterClick = (event) => {
+    if (!event.target.classList.contains('form__btn--current')) {
+      Array.from(document.querySelectorAll('.form__btn')).forEach((el) => el.classList.remove('form__btn--current'));
+      event.target.classList.add('form__btn--current');
+    }
+  }
 
   return (
     <>
@@ -15,6 +22,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
               key={item.id + item.taskName}
               handleToggle={handleToggle}
               handleUnfinished={handleUnfinished}
+              handleItemRemove={handleItemRemove}
             />
           )
         })}
@@ -22,9 +30,9 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished }) => {
       <footer className='form__footer'>
         <span className='form__counter'>Засталося зрабіць: {undoneItemsCount}</span>
         <div className='form__filters'>
-          <button className='form__btn'>Усе</button>
-          <button className='form__btn'>Актыўныя</button>
-          <button className='form__btn'>Зробленыя</button>
+          <button className='form__btn form__btn--current' onClick={handleFilterClick}>Усе</button>
+          <button className='form__btn' onClick={handleFilterClick}>Актыўныя</button>
+          <button className='form__btn' onClick={handleFilterClick}>Зробленыя</button>
         </div>
         <button
           className={

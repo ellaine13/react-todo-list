@@ -1,7 +1,7 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({item, handleToggle}) => {
+const Item = ({item, handleToggle, handleItemRemove}) => {
   const handleItemClick = (event) => {
     handleToggle(event.currentTarget.dataset.id)
   }
@@ -10,7 +10,7 @@ const Item = ({item, handleToggle}) => {
     <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} onClick={handleItemClick}>
       <input type='checkbox' className='item__checkbox' checked={item.complete ? 'checked' : false} readOnly />
       <span className='item__label'>{item.taskName}</span>
-      <button type='button' className='remove'>Выдаліць</button>
+      <button type='button' className='remove' onClick={handleItemRemove}>Выдаліць</button>
     </li>
   );
 };

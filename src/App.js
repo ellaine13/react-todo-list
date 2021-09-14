@@ -44,6 +44,17 @@ function App() {
     setToDoList(unfinished);
   }
 
+  const handleItemRemove = (event) => {
+    event.stopPropagation();
+    let itemText = event.target.previousSibling.textContent;
+
+    let cleared = toDoList.filter(task => {
+      return task.taskName !== itemText;
+    });
+
+    setToDoList(cleared);
+  }
+
   return (
     <div className="App">
       <header className="header">
@@ -61,7 +72,7 @@ function App() {
             onChange={handleInputChange}
             value={userInput}
           />
-          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} />
+          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} handleItemRemove={handleItemRemove} />
         </form>
       </main>
     </div>
