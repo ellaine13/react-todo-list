@@ -24,6 +24,7 @@ function App() {
       id: toDoList.length + userInput,
       taskName: userInput,
       complete: false,
+      index: toDoList.length,
     }];
     setToDoList(copy);
   }
@@ -72,7 +73,12 @@ function App() {
             onChange={handleInputChange}
             value={userInput}
           />
-          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} handleItemRemove={handleItemRemove} />
+          <ToDoList
+            toDoList={toDoList}
+            handleToggle={handleToggle}
+            handleUnfinished={handleUnfinished}
+            handleItemRemove={handleItemRemove}
+          />
         </form>
       </main>
     </div>
