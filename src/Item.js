@@ -3,7 +3,7 @@ import './Item.css';
 
 const Item = ({item, handleToggle, handleItemRemove}) => {
   const handleItemClick = (event) => {
-    handleToggle(event.currentTarget.dataset.id);
+    handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
 
   const handleLabelClick = (event) => {
@@ -22,9 +22,14 @@ const Item = ({item, handleToggle, handleItemRemove}) => {
   }
 
   return (
-    <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} onClick={handleItemClick}>
+    <li data-id={item.id} className={item.complete ? 'item item--done' : 'item'} >
       <div className='item__container'>
-        <input className='item__checkbox' type='checkbox' checked={item.complete ? 'checked' : false} readOnly />
+        <input
+          className='item__checkbox'
+          type='checkbox'
+          checked={item.complete ? 'checked' : false}
+          onClick={handleItemClick}
+        />
         <span className='item__label' onClick={handleLabelClick}>{item.taskName}</span>
         <button className='remove' type='button' onClick={handleItemRemove}>Выдаліць</button>
       </div>
