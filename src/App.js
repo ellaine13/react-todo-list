@@ -30,8 +30,8 @@ function App() {
   }
 
   const handleToggle = (id) => {
-    let mapped = toDoList.map(taskName => {
-      return taskName.id === id ? { ...taskName, complete: !taskName.complete } : { ...taskName};
+    let mapped = toDoList.map(task => {
+      return task.id === id ? { ...task, complete: !task.complete } : { ...task};
     });
 
     setToDoList(mapped);
@@ -46,7 +46,6 @@ function App() {
   }
 
   const handleItemRemove = (event) => {
-    event.stopPropagation();
     let itemText = event.target.previousSibling.textContent;
 
     let cleared = toDoList.filter(task => {
@@ -54,6 +53,15 @@ function App() {
     });
 
     setToDoList(cleared);
+  }
+
+  const handleLabel = (index, event) => {
+    let mappedList = toDoList.map(task => {
+      console.log(task.index, index, task.taskName, event.target.value);
+      return task.index === index ? { ...task, taskName: event.target.value } : { ...task};
+    });
+
+    setToDoList(mappedList);
   }
 
   return (
@@ -78,6 +86,7 @@ function App() {
             handleToggle={handleToggle}
             handleUnfinished={handleUnfinished}
             handleItemRemove={handleItemRemove}
+            handleLabel={handleLabel}
           />
         </form>
       </main>

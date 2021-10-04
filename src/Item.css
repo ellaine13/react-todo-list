@@ -5,7 +5,6 @@
     border: 1px solid #ddd;
     border-top: 0;
     background: #fff;
-    cursor: pointer;
 }
 
 .item__container {
@@ -21,6 +20,7 @@
 .item__label {
     margin: 14px auto 14px 0;
     line-height: 20px;
+    cursor: pointer;
 }
 
 .item--done .item__label {
