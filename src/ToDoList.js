@@ -2,7 +2,7 @@ import React from 'react';
 import Item from './Item';
 import './ToDoList.css';
 
-const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabel }) => {
+const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabelChange }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
 
   const handleFilterClick = (event) => {
@@ -27,7 +27,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
               handleToggle={handleToggle}
               handleUnfinished={handleUnfinished}
               handleItemRemove={handleItemRemove}
-              handleLabel={handleLabel}
+              handleLabelChange={handleLabelChange}
             />
           )
         })}

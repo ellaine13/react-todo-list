@@ -1,7 +1,7 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({item, handleToggle, handleItemRemove, handleLabel}) => {
+const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
   const handleCheckboxClick = (event) => {
     handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
@@ -15,10 +15,12 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabel}) => {
   }
 
   const handleLabelBlur = (event) => {
+    const editedItemIndex = parseInt(event.target.parentNode.dataset.index);
+
     event.target.previousSibling.classList.remove('item__container--hidden');
     event.target.classList.remove('item__edit--visible');
 
-    handleLabel(event.target.parentNode.dataset.index, event);
+    handleLabelChange(editedItemIndex, event);
   }
 
   return (
