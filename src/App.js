@@ -4,40 +4,40 @@ import './App.css';
 
 function App() {
   const [toDoList, setToDoList] = useState([]);
-  const [userInput, setUserInput] = useState('');
+  const [userInputValue, setUserInputValue] = useState('');
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (!userInput) return;
-    addListItem(userInput);
-    setUserInput('');
+    if (!userInputValue) return;
+    addListItem(userInputValue);
+    setUserInputValue('');
   }
 
   const handleInputChange = (event) => {
-    setUserInput(event.currentTarget.value)
+    setUserInputValue(event.currentTarget.value)
   }
 
   const addListItem = (userInput) => {
-    let copy = [...toDoList];
-
-    copy = [...copy, {
+    const copy = [...toDoList, {
       id: toDoList.length + userInput,
       taskName: userInput,
       complete: false,
+      index: toDoList.length,
     }];
+
     setToDoList(copy);
   }
 
   const handleToggle = (id) => {
-    let mapped = toDoList.map(taskName => {
-      return taskName.id === id ? { ...taskName, complete: !taskName.complete } : { ...taskName};
+    const mapped = toDoList.map(task => {
+      return task.id === id ? { ...task, complete: !task.complete } : { ...task};
     });
 
     setToDoList(mapped);
   }
 
   const handleUnfinished = () => {
-    let unfinished = toDoList.filter(task => {
+    const unfinished = toDoList.filter(task => {
       return !task.complete;
     });
 
@@ -45,14 +45,21 @@ function App() {
   }
 
   const handleItemRemove = (event) => {
-    event.stopPropagation();
-    let itemText = event.target.previousSibling.textContent;
+    const itemText = event.target.previousSibling.textContent;
 
-    let cleared = toDoList.filter(task => {
+    const cleared = toDoList.filter(task => {
       return task.taskName !== itemText;
     });
 
     setToDoList(cleared);
+  }
+
+  const handleLabelChange = (index, event) => {
+    const mappedList = toDoList.map(task => {
+      return task.index === index ? { ...task, taskName: event.target.value } : { ...task};
+    });
+
+    setToDoList(mappedList);
   }
 
   return (
@@ -70,9 +77,15 @@ function App() {
             placeholder="Што мае быць зроблена?"
             className="form__input"
             onChange={handleInputChange}
-            value={userInput}
+            value={userInputValue}
           />
-          <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleUnfinished={handleUnfinished} handleItemRemove={handleItemRemove} />
+          <ToDoList
+            toDoList={toDoList}
+            handleToggle={handleToggle}
+            handleUnfinished={handleUnfinished}
+            handleItemRemove={handleItemRemove}
+            handleLabelChange={handleLabelChange}
+          />
         </form>
       </main>
     </div>
