@@ -23,6 +23,14 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
     handleLabelChange(editedItemIndex, event);
   }
 
+  const handleEnterKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      const editedItemIndex = parseInt(event.target.parentNode.dataset.index);
+
+      handleLabelChange(editedItemIndex, event);
+    }
+  }
+
   return (
     <li data-id={item.id} data-index={item.index} className={item.complete ? 'item item--done' : 'item'} >
       <div className='item__container'>
@@ -39,6 +47,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
         type='text'
         className='item__edit'
         onBlur={handleLabelBlur}
+        onKeyDown={handleEnterKeyDown}
       />
     </li>
   );
