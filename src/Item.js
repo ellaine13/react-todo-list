@@ -1,16 +1,19 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
+const Item = ({item, handleToggle, handleItemRemove, handleLabelChange, handleTextInputEdit}) => {
   const handleCheckboxClick = (event) => {
     handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
 
   const handleLabelClick = (event) => {
     if (event.detail === 2) {
-      event.target.parentNode.classList.add('item__container--hidden');
-      event.target.parentNode.nextSibling.classList.add('item__edit--visible');
-      event.target.parentNode.nextSibling.focus();
+      const tgtParent = event.target.parentNode;
+
+      tgtParent.classList.add('item__container--hidden');
+      tgtParent.nextSibling.classList.add('item__edit--visible');
+      tgtParent.nextSibling.focus();
+      tgtParent.nextSibling.value = item.taskName;
     }
   }
 
@@ -48,6 +51,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
         className='item__edit'
         onBlur={handleLabelBlur}
         onKeyDown={handleEnterKeyDown}
+        onInput={handleTextInputEdit}
       />
     </li>
   );
