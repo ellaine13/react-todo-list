@@ -1,7 +1,7 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({item, handleToggle, handleItemRemove, handleLabelChange, handleTextInputEdit}) => {
+const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
   const handleCheckboxClick = (event) => {
     handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
@@ -51,7 +51,6 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange, handleTe
         className='item__edit'
         onBlur={handleLabelBlur}
         onKeyDown={handleEnterKeyDown}
-        onInput={handleTextInputEdit}
       />
     </li>
   );
