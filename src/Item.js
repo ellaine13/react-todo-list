@@ -1,7 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import './Item.css';
 
 const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
+  const [itemInputValue, setItemInputValue] = useState('');
+
   const handleCheckboxClick = (event) => {
     handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
@@ -13,7 +16,8 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
       tgtParent.classList.add('item__container--hidden');
       tgtParent.nextSibling.classList.add('item__edit--visible');
       tgtParent.nextSibling.focus();
-      tgtParent.nextSibling.value = item.taskName;
+
+      setItemInputValue(item.taskName);
     }
   }
 
@@ -34,6 +38,10 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
     }
   }
 
+  const handleItemChange = (event) => {
+    setItemInputValue(event.target.value);
+  };
+
   return (
     <li data-id={item.id} data-index={item.index} className={item.complete ? 'item item--done' : 'item'} >
       <div className='item__container'>
@@ -51,6 +59,8 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
         className='item__edit'
         onBlur={handleLabelBlur}
         onKeyDown={handleEnterKeyDown}
+        onChange={handleItemChange}
+        value={itemInputValue}
       />
     </li>
   );
