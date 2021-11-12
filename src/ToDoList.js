@@ -4,15 +4,16 @@ import './ToDoList.css';
 
 const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabelChange }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
+  const thereAreDoneItems = toDoList.reduce(( acc, current ) => current.complete === true ? true : acc, false);
 
   const handleFilterClick = (event) => {
     if (!event.target.classList.contains('form__btn--current')) {
       Array.from(document.querySelectorAll('.form__btn')).forEach((el) => el.classList.remove('form__btn--current'));
       event.target.classList.add('form__btn--current');
 
-      if (event.target.classList.contains('form__btn--active')) {
-        handleUnfinished();
-      }
+      // if (event.target.classList.contains('form__btn--active')) {
+      //   handleUnfinished();
+      // }
     }
   }
 
@@ -41,7 +42,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
         </div>
         <button
           className={
-            (toDoList.length === 0)
+            (toDoList.length === 0 || !thereAreDoneItems)
               ? 'form__clear form__clear--hidden'
               : 'form__clear'
           }
