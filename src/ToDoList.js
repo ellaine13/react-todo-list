@@ -12,7 +12,7 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabelChange }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
-  const thereAreDoneItems = toDoList.reduce(( acc, current ) => current.complete === true ? true : acc, false);
+  const thereAreDoneItems = toDoList.some(task => task.complete === true);
   const [itemsFilter, setItemsFilter] = useState('Усе');
 
   const filterList = FILTER_NAMES.map(name => (
