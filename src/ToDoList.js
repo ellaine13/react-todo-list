@@ -1,11 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Item from './Item';
 import './ToDoList.css';
 
+const FILTER_CAPTIONS = {
+  all: 'Усе',
+  active: 'Актыўныя',
+  done: 'Зробленыя',
+};
+
 const FILTER_MAP = {
-  Усе: () => true,
-  Актыўныя: task => !task.complete,
-  Зробленыя: task => task.complete
+  [FILTER_CAPTIONS.all]: () => true,
+  [FILTER_CAPTIONS.active]: task => !task.complete,
+  [FILTER_CAPTIONS.done]: task => task.complete,
 };
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
@@ -13,7 +19,7 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabelChange }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
   const thereAreDoneItems = toDoList.some(task => task.complete === true);
-  const [itemsFilter, setItemsFilter] = useState('Усе');
+  const [itemsFilter, setItemsFilter] = useState(FILTER_CAPTIONS.all);
 
   const filterList = FILTER_NAMES.map(name => (
     <FilterButton
