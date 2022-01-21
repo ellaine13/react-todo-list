@@ -2,9 +2,28 @@ import { useState } from 'react';
 import ToDoList from './ToDoList';
 import './App.css';
 
+let localStorageList = [];
+
+try {
+  const localStorageList_ = JSON.parse(localStorage.getItem('toDoItems'));
+
+  if (Array.isArray(localStorageList_)) {
+    localStorageList = localStorageList_;
+  }
+} catch {}
+
 function App() {
-  const [toDoList, setToDoList] = useState([]);
+  const [toDoList, setToDoListState] = useState(localStorageList);
   const [userInputValue, setUserInputValue] = useState('');
+
+  const saveData = (toDoItems) => {
+    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
+  }
+
+  const setToDoList = (toDoItems) => {
+    setToDoListState(toDoItems);
+    saveData(toDoItems);
+  }
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
