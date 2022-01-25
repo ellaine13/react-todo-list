@@ -98,14 +98,14 @@ function App() {
             onChange={handleInputChange}
             value={userInputValue}
           />
-          <ToDoList
-            toDoList={toDoList}
-            handleToggle={handleToggle}
-            handleUnfinished={handleUnfinished}
-            handleItemRemove={handleItemRemove}
-            handleLabelChange={handleLabelChange}
-          />
         </form>
+        <ToDoList
+          toDoList={toDoList}
+          handleToggle={handleToggle}
+          handleUnfinished={handleUnfinished}
+          handleItemRemove={handleItemRemove}
+          handleLabelChange={handleLabelChange}
+        />
       </main>
     </div>
   );

@@ -55,7 +55,6 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
                 item={item}
                 key={item.id + item.taskName}
                 handleToggle={handleToggle}
-                handleUnfinished={handleUnfinished}
                 handleItemRemove={handleItemRemove}
                 handleLabelChange={handleLabelChange}
               />
@@ -68,6 +67,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
           {filterList}
         </div>
         <button
+          type='button'
           className={
             (toDoList.length === 0 || !thereAreDoneItems)
               ? 'form__clear form__clear--hidden'
