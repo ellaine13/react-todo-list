@@ -1,16 +1,23 @@
 import React from 'react';
+import { useState } from 'react';
 import './Item.css';
 
 const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
+  const [itemInputValue, setItemInputValue] = useState('');
+
   const handleCheckboxClick = (event) => {
     handleToggle(event.currentTarget.closest('.item').dataset.id);
   }
 
   const handleLabelClick = (event) => {
     if (event.detail === 2) {
-      event.target.parentNode.classList.add('item__container--hidden');
-      event.target.parentNode.nextSibling.classList.add('item__edit--visible');
-      event.target.parentNode.nextSibling.focus();
+      const tgtParent = event.target.parentNode;
+
+      tgtParent.classList.add('item__container--hidden');
+      tgtParent.nextSibling.classList.add('item__edit--visible');
+      tgtParent.nextSibling.focus();
+
+      setItemInputValue(item.taskName);
     }
   }
 
@@ -22,6 +29,18 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
 
     handleLabelChange(editedItemIndex, event);
   }
+
+  const handleEnterKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      const editedItemIndex = parseInt(event.target.parentNode.dataset.index);
+
+      handleLabelChange(editedItemIndex, event);
+    }
+  }
+
+  const handleItemChange = (event) => {
+    setItemInputValue(event.target.value);
+  };
 
   return (
     <li data-id={item.id} data-index={item.index} className={item.complete ? 'item item--done' : 'item'} >
@@ -39,6 +58,9 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
         type='text'
         className='item__edit'
         onBlur={handleLabelBlur}
+        onKeyDown={handleEnterKeyDown}
+        onChange={handleItemChange}
+        value={itemInputValue}
       />
     </li>
   );
