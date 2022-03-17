@@ -1,46 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Item from './Item';
 import './ToDoList.css';
 
+const FILTER_CAPTIONS = {
+  all: 'Усе',
+  active: 'Актыўныя',
+  done: 'Зробленыя',
+};
+
+const FILTER_MAP = {
+  [FILTER_CAPTIONS.all]: () => true,
+  [FILTER_CAPTIONS.active]: task => !task.complete,
+  [FILTER_CAPTIONS.done]: task => task.complete,
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
 const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, handleLabelChange }) => {
   const undoneItemsCount = toDoList.reduce(( acc, current ) => current.complete === false ? ++acc : acc, 0);
-  const thereAreDoneItems = toDoList.reduce(( acc, current ) => current.complete === true ? true : acc, false);
+  const thereAreDoneItems = toDoList.some(task => task.complete === true);
+  const [itemsFilter, setItemsFilter] = useState(FILTER_CAPTIONS.all);
 
-  const handleFilterClick = (event) => {
-    if (!event.target.classList.contains('form__btn--current')) {
-      Array.from(document.querySelectorAll('.form__btn')).forEach((el) => el.classList.remove('form__btn--current'));
-      event.target.classList.add('form__btn--current');
+  const filterList = FILTER_NAMES.map(name => (
+    <FilterButton
+      key={name}
+      name={name}
+      isPressed={name === itemsFilter}
+      setFilter={setItemsFilter}
+    />
+  ));
 
-      // if (event.target.classList.contains('form__btn--active')) {
-      //   handleUnfinished();
-      // }
-    }
+  function FilterButton(props) {
+    const currentFilterBtn = props.isPressed ? 'form__btn--current' : '';
+
+    return (
+      <button
+        type="button"
+        className={`form__btn ${currentFilterBtn}`}
+        onClick={() => props.setFilter(props.name)}
+      >
+        <span>{props.name}</span>
+      </button>
+    );
   }
 
   return (
     <>
       <ul className='form__list'>
-        {toDoList.map(item => {
-          return (
-            <Item
-              item={item}
-              key={item.id + item.taskName}
-              handleToggle={handleToggle}
-              handleUnfinished={handleUnfinished}
-              handleItemRemove={handleItemRemove}
-              handleLabelChange={handleLabelChange}
-            />
-          )
+        {toDoList
+          .filter(FILTER_MAP[itemsFilter])
+          .map(item => {
+            return (
+              <Item
+                item={item}
+                key={item.id + item.taskName}
+                handleToggle={handleToggle}
+                handleItemRemove={handleItemRemove}
+                handleLabelChange={handleLabelChange}
+              />
+            )
         })}
       </ul>
       <footer className='form__footer'>
         <span className='form__counter'>Засталося зрабіць: {undoneItemsCount}</span>
         <div className='form__filters'>
-          <button className='form__btn form__btn--current' onClick={handleFilterClick}>Усе</button>
-          <button className='form__btn form__btn--active' onClick={handleFilterClick}>Актыўныя</button>
-          <button className='form__btn form__btn--done' onClick={handleFilterClick}>Зробленыя</button>
+          {filterList}
         </div>
         <button
+          type='button'
           className={
             (toDoList.length === 0 || !thereAreDoneItems)
               ? 'form__clear form__clear--hidden'
