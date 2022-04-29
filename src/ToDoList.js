@@ -46,7 +46,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
 
   return (
     <>
-      <ul className='form__list' data-testid='form-list'>
+      <ul className='form__list'>
         {toDoList
           .filter(FILTER_MAP[itemsFilter])
           .map(item => {

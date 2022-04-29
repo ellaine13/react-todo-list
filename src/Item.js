@@ -22,7 +22,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
   }
 
   const handleLabelBlur = (event) => {
-    const editedItemIndex = parseInt(event.target.parentNode.dataset.index);
+    const editedItemIndex = parseInt(event.target.parentNode.dataset.id);
 
     event.target.previousSibling.classList.remove('item__container--hidden');
     event.target.classList.remove('item__edit--visible');
@@ -32,7 +32,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
 
   const handleEnterKeyDown = (event) => {
     if (event.code === 'Enter') {
-      const editedItemIndex = parseInt(event.target.parentNode.dataset.index);
+      const editedItemIndex = parseInt(event.target.parentNode.dataset.id);
 
       handleLabelChange(editedItemIndex, event);
     }
@@ -50,6 +50,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
           type='checkbox'
           checked={item.complete ? 'checked' : false}
           onChange={handleCheckboxClick}
+          title='Пазначыць як зробленае'
         />
         <label className='item__label' onClick={handleLabelClick}>{item.taskName}</label>
         <button className='remove' type='button' onClick={handleItemRemove}>Выдаліць</button>
