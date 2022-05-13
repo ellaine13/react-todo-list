@@ -9,26 +9,25 @@ describe('ToDoListApp', () => {
     );
   };
 
-  beforeEach(() => {
-    renderComponent();
-  });
-
   test('Checks ToDo form input existence', () => {
+    renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
     expect(formInput).toBeInTheDocument();
   });
 
   test('Checks if new ToDo item adds on enter press', async () => {
+    renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
     const formList = screen.getByRole('list');
 
     expect(formList).toBeEmptyDOMElement();
-    userEvent.click(formInput);
-    userEvent.type(formInput, 'A new item{enter}');
+    await userEvent.click(formInput);
+    await userEvent.type(formInput, 'A new item{enter}');
     expect(formList).not.toBeEmptyDOMElement();
   });
 
   test('Should add 3 items', async () => {
+    renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
 
     const itemsContent = [
