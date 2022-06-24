@@ -36,23 +36,26 @@ describe('ToDoListApp', () => {
       'Нумар тры',
     ];
 
-    itemsContent.map(itemText => createItem(formInput, itemText));
+    await Promise.all(itemsContent.map(itemText => createItem(formInput, itemText)));
+    // eslint-disable-next-line testing-library/no-debugging-utils
 
     const itemsNodes = screen.getAllByRole('listitem');
+    // eslint-disable-next-line testing-library/no-debugging-utils
+    screen.debug(itemsNodes);
     expect(itemsNodes.length).toBe(3);
 
     itemsNodes.forEach((itemNode, index) => expect(itemNode).toHaveTextContent(itemsContent[index]));
   });
 })
 
-const createItem = (formInput, itemText) => {
-  expect(formInput).not.toHaveValue();
+const createItem = async (formInput, itemText) => {
+  // expect(formInput).not.toHaveValue();
 
-  fireEvent.change(formInput, { target: { value: itemText } })
+  // fireEvent.change(formInput, { target: { value: itemText } })
 
-  expect(formInput).toHaveValue(itemText)
+  // expect(formInput).toHaveValue(itemText)
 
-  userEvent.type(formInput, 'A new item{enter}');
+  await userEvent.type(formInput, `${itemText}{enter}`);
 
-  expect(formInput).not.toHaveValue();
+  // expect(formInput).not.toHaveValue();
 }
