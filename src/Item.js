@@ -43,7 +43,7 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
   };
 
   return (
-    <li data-id={item.id} data-index={item.index} className={item.complete ? 'item item--done' : 'item'} >
+    <li data-id={item.id} data-index={item.index} data-testid='toDoItem' className={item.complete ? 'item item--done' : 'item'} >
       <div className='item__container'>
         <input
           className='item__checkbox'

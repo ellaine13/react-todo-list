@@ -62,7 +62,7 @@ const ToDoList = ({ toDoList, handleToggle, handleUnfinished, handleItemRemove, 
         })}
       </ul>
       <footer className='form__footer'>
-        <span className='form__counter'>Засталося зрабіць: {undoneItemsCount}</span>
+        <span className='form__counter' data-testid='undoneItemsCount'>Засталося зрабіць: {undoneItemsCount}</span>
         <div className='form__filters'>
           {filterList}
         </div>

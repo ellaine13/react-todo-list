@@ -26,6 +26,32 @@ describe('ToDoListApp', () => {
     expect(formList).not.toBeEmptyDOMElement();
   });
 
+  test('Item deletes when Remove button clicked', async () => {
+    renderComponent();
+
+    const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
+    const formList = screen.getByRole('list');
+    const undoneItemsCount = screen.getByTestId('undoneItemsCount');
+
+    expect(formList).toBeEmptyDOMElement();
+    await userEvent.click(formInput);
+    await userEvent.type(formInput, 'A new item{enter}');
+    expect(formList).not.toBeEmptyDOMElement();
+
+    const item = screen.getByText('A new item');
+
+    const todoDeleteButton = screen.getByText('Выдаліць');
+    fireEvent.click(todoDeleteButton);
+
+    const items = screen.queryAllByTestId('toDoItem');
+
+    expect(undoneItemsCount).toHaveTextContent('Засталося зрабіць: 0');
+
+    expect(item).not.toBeInTheDocument();
+
+    expect(items.length).toBe(0);
+  });
+
   test('Should add 3 items', async () => {
     renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
@@ -37,7 +63,6 @@ describe('ToDoListApp', () => {
     ];
 
     await Promise.all(itemsContent.map(itemText => createItem(formInput, itemText)));
-    // eslint-disable-next-line testing-library/no-debugging-utils
 
     const itemsNodes = screen.getAllByRole('listitem');
     // eslint-disable-next-line testing-library/no-debugging-utils
