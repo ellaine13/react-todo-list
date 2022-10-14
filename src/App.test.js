@@ -9,6 +9,41 @@ describe('ToDoListApp', () => {
     );
   };
 
+  afterEach(() => {
+    window.localStorage.clear();
+  });
+
+  const fillItems = async () => {
+    renderComponent();
+    const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
+    const formList = screen.getByRole('list');
+
+    const itemsContent = [
+      'Нумар адзін',
+      'Нумар два',
+      'Нумар тры',
+      'Нумар чатыры',
+      'Нумар пяць',
+    ];
+
+    expect(formList).toBeEmptyDOMElement();
+    await userEvent.click(formInput);
+    await userEvent.type(formInput, `${itemsContent[0]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[1]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[2]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[3]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[4]}{enter}`);
+    expect(formList).not.toBeEmptyDOMElement();
+
+    await userEvent.click(screen.getByText('Нумар два'));
+    await userEvent.click(screen.getByText('Нумар чатыры'));
+    expect(screen.getByLabelText('Нумар адзін')).not.toBeChecked();
+    expect(screen.getByLabelText('Нумар два')).toBeChecked();
+    expect(screen.getByLabelText('Нумар тры')).not.toBeChecked();
+    expect(screen.getByLabelText('Нумар чатыры')).toBeChecked();
+    expect(screen.getByLabelText('Нумар пяць')).not.toBeChecked();
+  }
+
   test('Checks ToDo form input existence', () => {
     renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
@@ -55,32 +90,54 @@ describe('ToDoListApp', () => {
   test('Should add 3 items', async () => {
     renderComponent();
     const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
+    const formList = screen.getByRole('list');
 
     const itemsContent = [
       'Нумар адзін',
       'Нумар два',
       'Нумар тры',
     ];
+    expect(formList).toBeEmptyDOMElement();
+    await userEvent.click(formInput);
 
-    await Promise.all(itemsContent.map(itemText => createItem(formInput, itemText)));
+    await userEvent.type(formInput, `${itemsContent[0]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[1]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[2]}{enter}`);
+
+    expect(formList).not.toBeEmptyDOMElement();
 
     const itemsNodes = screen.getAllByRole('listitem');
-    // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug(itemsNodes);
     expect(itemsNodes.length).toBe(3);
+  });
 
-    itemsNodes.forEach((itemNode, index) => expect(itemNode).toHaveTextContent(itemsContent[index]));
+  test('Checks that selected checkboxes were actually checked, and other ones not', async () => {
+    renderComponent();
+    const formInput = screen.getByPlaceholderText('Што мае быць зроблена?');
+    const formList = screen.getByRole('list');
+
+    const itemsContent = [
+      'Нумар адзін',
+      'Нумар два',
+      'Нумар тры',
+      'Нумар чатыры',
+      'Нумар пяць',
+    ];
+
+    expect(formList).toBeEmptyDOMElement();
+    await userEvent.click(formInput);
+    await userEvent.type(formInput, `${itemsContent[0]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[1]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[2]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[3]}{enter}`);
+    await userEvent.type(formInput, `${itemsContent[4]}{enter}`);
+    expect(formList).not.toBeEmptyDOMElement();
+
+    await userEvent.click(screen.getByText('Нумар два'));
+    await userEvent.click(screen.getByText('Нумар чатыры'));
+    expect(screen.getByLabelText('Нумар адзін')).not.toBeChecked();
+    expect(screen.getByLabelText('Нумар два')).toBeChecked();
+    expect(screen.getByLabelText('Нумар тры')).not.toBeChecked();
+    expect(screen.getByLabelText('Нумар чатыры')).toBeChecked();
+    expect(screen.getByLabelText('Нумар пяць')).not.toBeChecked();
   });
 })
-
-const createItem = async (formInput, itemText) => {
-  // expect(formInput).not.toHaveValue();
-
-  // fireEvent.change(formInput, { target: { value: itemText } })
-
-  // expect(formInput).toHaveValue(itemText)
-
-  await userEvent.type(formInput, `${itemText}{enter}`);
-
-  // expect(formInput).not.toHaveValue();
-}

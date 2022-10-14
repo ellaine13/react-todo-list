@@ -51,8 +51,9 @@ const Item = ({item, handleToggle, handleItemRemove, handleLabelChange}) => {
           checked={item.complete ? 'checked' : false}
           onChange={handleCheckboxClick}
           title='Пазначыць як зробленае'
+          id={item.index}
         />
-        <label className='item__label' onClick={handleLabelClick}>{item.taskName}</label>
+        <label htmlFor={item.index} className='item__label' onClick={handleLabelClick}>{item.taskName}</label>
         <button className='remove' type='button' onClick={handleItemRemove}>Выдаліць</button>
       </div>
       <input
